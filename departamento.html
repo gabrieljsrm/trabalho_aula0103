@@ -17,9 +17,10 @@
           <th>Telefone</th>
         </tr>
         <tbody id="clientes"></tbody>            
-      </table>
+      </table><br>
 
-    
+      Veículo: <select id="veiculo" onclick="buscarVeiculos()">
+    </select>
 
     <hr>
     <h3>Endereço</h3>
@@ -78,6 +79,35 @@
 
         console.log(data);
     }
+
+    function buscarVeiculos(){ 
+
+fetch("https://demo5558772.mockable.io/ex3") 
+
+.then(response => response.json()) 
+
+.then(data => criarComboVeiculos(data)) 
+
+.catch(error => alert(error)) 
+
+} 
+
+let pronto = false;
+
+    function criarComboVeiculos(data){ 
+        if(pronto == false) {
+        for(let i = 0; i < data.length; i++){ 
+
+            let item = `<option>${data[i]}</option>`;
+
+
+            document.getElementById("veiculo").innerHTML += item; 
+            pronto = true;
+        } }
+
+    }
+
+    
 
 
 </script>
