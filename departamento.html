@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="button" value="Buscar Clientes" onclick="buscarClientes()"/>
+
+    <table border="1">
+        <tr>
+          <th>Nome</th>
+          <th>Endereço</th>
+          <th>Telefone</th>
+        </tr>
+        <tbody id="clientes"></tbody>            
+      </table>
+
+    
+
+    <hr>
+    <h3>Endereço</h3>
+    Cep: <input type="text" id="cep" onblur="buscarCep(this.value)" /><br>
+    <p> RUA: <input type="text" id="rua" /> </p>
+    <p>Bairro: <input type="text" id="bairro"></p>
+    <p> Complemento: <input type="text" id="complemento"> </p>
+    <p> DDD: <input type="text" id="ddd"> </p>
+    <p> gia: <input type="text" id="gia"> </p>
+    <p> ibge: <input type="text" id="ibge"> </p>
+    <p> localidade: <input type="text" id="localidade"> </p>
+    <p> siafi: <input type="text" id="siafi"> </p>
+    <p> uf: <input type="text" id="uf"> </p>
+    
+</body>
+
+<script>
+    function buscarClientes(){
+        fetch("http://demo6028151.mockable.io/ex2")
+        .then(response => response.json())
+        .then(data => criarListaClientes(data))
+        .catch(error => alert(error))
+    }
+
+    function criarListaClientes(data){
+        debugger;
+        for(let i = 0; i < data.length; i++)
+        {
+            let item = `<tr>
+                <td>${data[i].nome}</td>
+                <td>${data[i].endereco}</td>
+                <td>${data[i].telefone}</td>
+                </tr>
+            `;
+            document.getElementById("clientes").innerHTML += item;
+        }
+    }
+
+    function buscarCep(cep){
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => preencherCep(data))
+        .catch(error => alert(error))
+    }
+
+    function preencherCep(data){
+        document.getElementById("rua").value = data.logradouro; 
+        document.getElementById("complemento").value = data.complemento;
+        document.getElementById("bairro").value = data.bairro;
+        document.getElementById("ddd").value = data.ddd;
+        document.getElementById("gia").value = data.gia;
+        document.getElementById("ibge").value = data.ibge;
+        document.getElementById("localidade").value = data.localidade;
+        document.getElementById("siafi").value = data.siafi;
+        document.getElementById("uf").value = data.uf;
+
+        console.log(data);
+    }
+
+
+</script>
+</html>
