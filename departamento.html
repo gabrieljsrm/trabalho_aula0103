@@ -98,15 +98,15 @@
 
             .then(response => response.json())
 
-            .then(data => criarComboVeiculos(data))
+            .then(data => criarListaoVeiculos(data))
 
             .catch(error => alert(error))
 
     }
 
+    let pronto = false;
 
-
-    function criarComboVeiculos(data) {
+    function criarListaoVeiculos(data) {
         if (pronto == false) {
             for (let i = 0; i < data.length; i++) {
 
@@ -114,6 +114,8 @@
 
 
                 document.getElementById("veiculo").innerHTML += item;
+
+                pronto = true;
 
             }
         }
